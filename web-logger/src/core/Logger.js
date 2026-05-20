@@ -112,7 +112,9 @@ export class Logger {
       level: this.#level,
       context: { ...this.#context, ...additionalContext }
     });
-    child.#transports = [...this.#transports];
+    for (const transport of this.#transports) {
+      child.addTransport(transport);
+    }
     return child;
   }
 

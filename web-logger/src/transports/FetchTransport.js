@@ -47,7 +47,7 @@ export class FetchTransport extends Transport {
   async flush() {
     if (this.#queue.length === 0) return;
 
-    const batch =.splice(this.#queue, 0, this.#queue.length);
+    const batch = this.#queue.splice(0, this.#queue.length);
     await this.#sendWithRetry(batch);
   }
 

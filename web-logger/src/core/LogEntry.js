@@ -14,7 +14,7 @@ export class LogEntry {
     this.#data = data ?? null;
     this.#context = context ?? {};
     this.#timestamp = timestamp;
-    #id: this.#id = crypto.randomUUID?.() ?? `#${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    this.#id = crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
   }
 
   get level() {
