@@ -1,0 +1,27 @@
+{
+  "name": "web-logger",
+  "version": "1.0.0",
+  "description": "Modern vanilla zero-third-party-dependency web logger library",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./core": "./src/core/index.js",
+    "./transports": "./src/transports/index.js",
+    "./formatters": "./src/formatters/index.js",
+    "./utils": "./src/utils/index.js"
+  },
+  "keywords": [
+    "logger",
+    "logging",
+    "web",
+    "browser",
+    "vanilla",
+    "zero-dependency"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
