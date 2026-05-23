@@ -1,5 +1,14 @@
 import { Transport } from '../core/Transport.js';
 
+/**
+ * Transport that sends log entries via WebSocket.
+ * @example
+ * const transport = new WebSocketTransport({
+ *   url: 'wss://logs.example.com',
+ *   reconnectInterval: 5000,
+ *   maxReconnects: 10
+ * });
+ */
 export class WebSocketTransport extends Transport {
   #url;
   #socket = null;
@@ -10,6 +19,14 @@ export class WebSocketTransport extends Transport {
   #reconnectCount = 0;
   #protocols;
 
+  /**
+   * Creates a new WebSocketTransport instance.
+   * @param {object} options - Transport options.
+   * @param {string} options.url - WebSocket URL.
+   * @param {string[]} [options.protocols] - WebSocket protocols.
+   * @param {number} [options.reconnectInterval=5000] - Reconnect interval in ms.
+   * @param {number} [options.maxReconnects=10] - Maximum reconnect attempts.
+   */
   constructor(options = {}) {
     super(options);
     this.#url = options.url;
@@ -31,6 +48,10 @@ export class WebSocketTransport extends Transport {
     return this.#queue.length;
   }
 
+  /**
+   * Establishes WebSocket connection.
+   * @private
+   */
   #connect() {
     try {
       this.#socket = new WebSocket(this.#url, this.#protocols);
@@ -46,17 +67,42 @@ export class WebSocketTransport extends Transport {
       this.#socket.onerror = () => {
         this.#connected = false;
       };
-    } catch {
+    } catch (error) {
+      this.#handleConnectionError(error);
       this.#attemptReconnect();
     }
   }
 
+  /**
+   * Handles connection errors.
+   * @param {Error} error - The connection error.
+   * @private
+   */
+  #handleConnectionError(error) {
+    if (typeof console !== 'undefined' && console.warn) {
+      console.warn('[WebSocketTransport] Connection error:', error);
+    }
+  }
+
+  /**
+   * Attempts to reconnect.
+   * @private
+   */
   #attemptReconnect() {
-    if (this.#reconnectCount >= this.#maxReconnects) return;
+    if (this.#reconnectCount >= this.#maxReconnects) {
+      if (typeof console !== 'undefined' && console.warn) {
+        console.warn('[WebSocketTransport] Max reconnects reached');
+      }
+      return;
+    }
     this.#reconnectCount++;
     setTimeout(() => this.#connect(), this.#reconnectInterval);
   }
 
+  /**
+   * Writes an entry to the WebSocket.
+   * @param {object} entry - The log entry to write.
+   */
   write(entry) {
     if (!this.shouldWrite(entry)) return;
     const formatted = this.format(entry);
@@ -68,15 +114,27 @@ export class WebSocketTransport extends Transport {
     }
   }
 
+  /**
+   * Sends data through the WebSocket.
+   * @param {*} data - Data to send.
+   * @private
+   */
   #send(data) {
     try {
       const payload = typeof data === 'string' ? data : JSON.stringify(data);
       this.#socket.send(payload);
-    } catch {
+    } catch (error) {
       this.#queue.push(data);
+      if (typeof console !== 'undefined' && console.warn) {
+        console.warn('[WebSocketTransport] Send failed, queuing data:', error);
+      }
     }
   }
 
+  /**
+   * Flushes the queued messages.
+   * @private
+   */
   #flushQueue() {
     while (this.#queue.length > 0 && this.#connected) {
       const data = this.#queue.shift();
@@ -84,14 +142,28 @@ export class WebSocketTransport extends Transport {
     }
   }
 
+  /**
+   * Flushes the transport.
+   * @returns {Promise<void>}
+   */
   async flush() {
     this.#flushQueue();
     return Promise.resolve();
   }
 
+  /**
+   * Closes the WebSocket connection.
+   * @returns {Promise<void>}
+   */
   async close() {
     if (this.#socket) {
-      this.#socket.close();
+      try {
+        this.#socket.close();
+      } catch (error) {
+        if (typeof console !== 'undefined' && console.warn) {
+          console.warn('[WebSocketTransport] Error closing socket:', error);
+        }
+      }
       this.#socket = null;
     }
     this.#connected = false;

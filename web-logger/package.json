@@ -4,12 +4,20 @@
   "description": "Modern vanilla zero-third-party-dependency web logger library",
   "type": "module",
   "main": "./src/index.js",
+  "types": "./src/types.ts",
   "exports": {
     ".": "./src/index.js",
+    "./factory": "./src/factory.js",
     "./core": "./src/core/index.js",
     "./transports": "./src/transports/index.js",
     "./formatters": "./src/formatters/index.js",
     "./utils": "./src/utils/index.js"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "logger",
@@ -23,5 +31,9 @@
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "vitest": "^1.0.0",
+    "@vitest/coverage-v8": "^1.0.0"
   }
 }
