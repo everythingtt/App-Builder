@@ -1,0 +1,138 @@
+/* Theme Variables - Kawaii Pink (Girls) */
+[data-theme="kawaii-pink"] {
+    --bg-primary: #ffe6f0;
+    --bg-secondary: #ffcce0;
+    --bg-tertiary: #ff99c2;
+    --bg-glass: rgba(255, 230, 240, 0.85);
+    
+    --text-primary: #5a1a3a;
+    --text-secondary: #8b2252;
+    --text-tertiary: #c2185b;
+    
+    --accent-primary: #ff69b4;
+    --accent-secondary: #ff1493;
+    --accent-tertiary: #db7093;
+    
+    --border-color: #ffb6c1;
+    --shadow-color: rgba(255, 105, 180, 0.3);
+    
+    --success-color: #00c853;
+    --warning-color: #ff9800;
+    --error-color: #f44336;
+    --info-color: #2196f3;
+    
+    --scrollbar-bg: #ffcce0;
+    --scrollbar-thumb: #ff69b4;
+    --scrollbar-thumb-hover: #ff1493;
+    
+    --modal-bg: linear-gradient(135deg, #ffe6f0 0%, #ffcce0 100%);
+    --modal-border: 3px solid #ff69b4;
+    
+    --btn-primary-bg: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    --btn-secondary-bg: linear-gradient(135deg, #ffb6c1 0%, #ff69b4 100%);
+    
+    --folder-color: #ff9800;
+    --file-color: #c2185b;
+    --code-bg: #fff0f5;
+    
+    --wallpaper-opacity: 0.15;
+    --dynamic-bg-image: url('https://wallup.net/wp-content/uploads/2015/12/57861-anime-school_uniform-anime_girls-Hentai_Ouji_to_Warawanai_Neko-visual_novel-Maimaki_Mai-Yokodera_Youto-748x529.jpg');
+}
+
+/* Theme Variables - Metal Action (Boys) */
+[data-theme="metal-action"] {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --bg-tertiary: #0f3460;
+    --bg-glass: rgba(26, 26, 46, 0.9);
+    
+    --text-primary: #e94560;
+    --text-secondary: #ff6b6b;
+    --text-tertiary: #f8b500;
+    
+    --accent-primary: #e94560;
+    --accent-secondary: #ff6b6b;
+    --accent-tertiary: #f8b500;
+    
+    --border-color: #e94560;
+    --shadow-color: rgba(233, 69, 96, 0.3);
+    
+    --success-color: #00ff88;
+    --warning-color: #ffaa00;
+    --error-color: #ff0044;
+    --info-color: #00d4ff;
+    
+    --scrollbar-bg: #16213e;
+    --scrollbar-thumb: #e94560;
+    --scrollbar-thumb-hover: #ff6b6b;
+    
+    --modal-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    --modal-border: 3px solid #e94560;
+    
+    --btn-primary-bg: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    --btn-secondary-bg: linear-gradient(135deg, #0f3460 0%, #e94560 100%);
+    
+    --folder-color: #f8b500;
+    --file-color: #00d4ff;
+    --code-bg: #0a0a1a;
+    
+    --wallpaper-opacity: 0.2;
+    --dynamic-bg-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1EAGxV42QfEEMk2DLqE4oSEQSmiWDQddb2g&s');
+}
+
+/* Additional Wallpaper Options */
+[data-wallpaper="kawaii-1"] {
+    --dynamic-bg-image: url('https://wallup.net/wp-content/uploads/2015/12/57861-anime-school_uniform-anime_girls-Hentai_Ouji_to_Warawanai_Neko-visual_novel-Maimaki_Mai-Yokodera_Youto-748x529.jpg');
+}
+
+[data-wallpaper="kawaii-2"] {
+    --dynamic-bg-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJImUjAKPOJj-doxSARCmNUesF5gOUbDD7MA&s');
+}
+
+[data-wallpaper="kawaii-3"] {
+    --dynamic-bg-image: url('https://c4.wallpaperflare.com/wallpaper/495/637/212/anime-anime-girls-hentai-ouji-to-warawanai-neko-tsutsukakushi-tsukiko-wallpaper-preview.jpg');
+}
+
+[data-wallpaper="kawaii-4"] {
+    --dynamic-bg-image: url('https://c4.wallpaperflare.com/wallpaper/306/381/112/anime-girls-hentai-ouji-to-warawanai-neko-blue-eyes-blushing-wallpaper-preview.jpg');
+}
+
+[data-wallpaper="metal-1"] {
+    --dynamic-bg-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1EAGxV42QfEEMk2DLqE4oSEQSmiWDQddb2g&s');
+}
+
+[data-wallpaper="metal-2"] {
+    --dynamic-bg-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDUPWQpgRkg6AXkln1zUUjRkd8jwZ94GjkeQ&s');
+}
+
+[data-wallpaper="metal-3"] {
+    --dynamic-bg-image: url('https://static.wikia.nocookie.net/aesthetics/images/e/e8/Femboy_castiel_onyx.jpg/revision/latest?cb=20230730190533');
+}
+
+[data-wallpaper="metal-4"] {
+    --dynamic-bg-image: url('https://cdn-images.dzcdn.net/images/cover/d478838532d15910554acf359b95c553/0x1900-000000-80-0-0.jpg');
+}
+
+/* Dynamic Background */
+.dynamic-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: var(--wallpaper-opacity);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: var(--dynamic-bg-image);
+    transition: background-image 0.5s ease;
+}
+
+/* Theme Transition */
+* {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+}

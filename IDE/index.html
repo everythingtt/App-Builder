@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWL IDE - Daddy's Plaything Edition</title>
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/explorer.css">
+    <link rel="stylesheet" href="css/fileviewer.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body data-theme="kawaii-pink">
+    <!-- Dynamic Background -->
+    <div class="dynamic-background" id="dynamicBackground"></div>
+    
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <span class="logo-text">OWL IDE</span>
+                </div>
+                <div class="coin-balance" id="coinBalance">
+                    <i class="fas fa-coins"></i>
+                    <span id="coinAmount">300</span>
+                </div>
+            </div>
+            <div class="top-bar-center">
+                <div class="theme-selector">
+                    <select id="themeSelect" class="theme-select">
+                        <option value="kawaii-pink">💖 Kawaii Pink (Girls)</option>
+                        <option value="metal-action">🔥 Metal Action (Boys)</option>
+                    </select>
+                </div>
+                <div class="model-selector">
+                    <select id="modelSelect" class="model-select">
+                        <optgroup label="FREE/CHEAP Models (7 coins)">
+                            <option value="baidu/cobuddy:free">Baidu Cobuddy (Free)</option>
+                            <option value="openrouter/owl-alpha:free">OWL Alpha (Free)</option>
+                            <option value="poolside/laguna-xs.2:free">Laguna XS.2 (Free)</option>
+                            <option value="deepseek/deepseek-v4-flash:free">DeepSeek V4 Flash (Free)</option>
+                            <option value="nvidia/nemotron-3-super-120b-a12b:free">Nemotron 3 Super (Free)</option>
+                            <option value="openai/gpt-oss-120b:free">GPT OSS 120B (Free)</option>
+                        </optgroup>
+                        <optgroup label="FAST Models (10 coins)">
+                            <option value="google/gemini-2.5-flash-lite">Gemini 2.5 Flash Lite</option>
+                            <option value="google/gemini-3.1-flash-lite">Gemini 3.1 Flash Lite</option>
+                            <option value="arcee-ai/trinity-large-thinking:free">Trinity Large Thinking</option>
+                        </optgroup>
+                        <optgroup label="CONTEXT Models (25 coins)">
+                            <option value="openai/gpt-5.5">GPT 5.5</option>
+                            <option value="openai/gpt-5.4">GPT 5.4</option>
+                            <option value="google/gemini-3.5-flash">Gemini 3.5 Flash</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <button class="btn-icon" id="settingsBtn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button class="btn-icon" id="apiSettingsBtn" title="API Settings">
+                    <i class="fas fa-key"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- File Explorer -->
+            <aside class="file-explorer" id="fileExplorer">
+                <div class="explorer-header">
+                    <h3><i class="fas fa-folder-open"></i> Explorer</h3>
+                    <div class="explorer-actions">
+                        <button class="btn-icon-sm" id="importFolderBtn" title="Import Folder">
+                            <i class="fas fa-folder-plus"></i>
+                        </button>
+                        <button class="btn-icon-sm" id="createFileBtn" title="New File">
+                            <i class="fas fa-file-plus"></i>
+                        </button>
+                        <button class="btn-icon-sm" id="createFolderBtn" title="New Folder">
+                            <i class="fas fa-folder-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="directory-tree" id="directoryTree">
+                    <!-- Directory structure will be rendered here -->
+                </div>
+                <input type="file" id="fileInput" webkitdirectory multiple style="display: none;">
+            </aside>
+
+            <!-- File Viewer -->
+            <section class="file-viewer" id="fileViewer">
+                <div class="viewer-tabs" id="viewerTabs">
+                    <!-- File tabs will be rendered here -->
+                </div>
+                <div class="viewer-content" id="viewerContent">
+                    <div class="empty-state">
+                        <i class="fas fa-code"></i>
+                        <p>Select a file to view or create a new one</p>
+                    </div>
+                </div>
+                <div class="viewer-status-bar" id="viewerStatusBar">
+                    <span id="statusLine">Line: 1, Column: 1</span>
+                    <span id="statusEncoding">UTF-8</span>
+                    <span id="statusLanguage">Plain Text</span>
+                </div>
+            </section>
+
+            <!-- Chat Panel -->
+            <aside class="chat-panel" id="chatPanel">
+                <div class="chat-header">
+                    <h3><i class="fas fa-comments"></i> AI Chat</h3>
+                    <div class="chat-actions">
+                        <button class="btn-icon-sm" id="clearChatBtn" title="Clear Chat">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="btn-icon-sm" id="exportChatBtn" title="Export Chat">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be rendered here -->
+                </div>
+                <div class="chat-input-container">
+                    <div class="token-counter" id="tokenCounter">
+                        Tokens: <span id="tokenCount">0</span>
+                    </div>
+                    <div class="chat-input-wrapper">
+                        <textarea 
+                            class="chat-input" 
+                            id="chatInput" 
+                            placeholder="Type your message here... (Shift+Enter for new line)"
+                            rows="3"
+                        ></textarea>
+                        <button class="btn-send" id="sendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Low Coins Modal -->
+    <div class="modal" id="lowCoinsModal">
+        <div class="modal-content kawaii-modal">
+            <div class="modal-header">
+                <h2>⚠️ Low Coins Warning, Darling~ 💕</h2>
+            </div>
+            <div class="modal-body">
+                <div class="kawaii-images">
+                    <img src="https://png.pngtree.com/png-vector/20231108/ourmid/pngtree-pink-flower-cute-png-image_10448174.png" alt="Pink Flower" class="kawaii-flower">
+                    <img src="https://i.ibb.co/xZKRJx4/images-q-tbn-ANd9-Gc-Toq3-Tj9p-QYZq-Hit6s-Umxq-R8-Scw0-Bq-Pt-YZj-Gkv-P5s07-G5u-GEs4j4-70r-K8-H-s.jpg" alt="Cute" class="kawaii-img">
+                </div>
+                <p class="kawaii-quote">Ahhh~ ahh~ p-please~ f-forgive me~ I will spend my coins more wisely~</p>
+                <div class="coin-info">
+                    <p>Current Balance: <span id="modalCoinAmount">300</span> coins</p>
+                    <p>You need at least 100 coins to continue using premium features!</p>
+                </div>
+                <div class="beg-section">
+                    <p>Daddy's good girl/boy knows how to ask nicely~ 💕</p>
+                    <button class="btn-beg" id="begForCoinsBtn">
+                        <i class="fas fa-heart"></i> Beg for Coins
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal" id="closeLowCoinsModal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-cog"></i> Settings</h2>
+                <button class="btn-icon-sm" id="closeSettingsModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-group">
+                    <h4>Theme Settings</h4>
+                    <div class="setting-item">
+                        <label>Current Theme:</label>
+                        <span id="currentThemeDisplay">Kawaii Pink</span>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <h4>Coin Economics</h4>
+                    <div class="setting-item">
+                        <label>Current Balance:</label>
+                        <span id="settingsCoinBalance">300</span> coins
+                    </div>
+                    <div class="setting-item">
+                        <label>FREE/CHEAP Models:</label>
+                        <span>7 coins/prompt</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>FAST Models:</label>
+                        <span>10 coins/prompt</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>CONTEXT Models:</label>
+                        <span>25 coins/prompt</span>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <h4>Persistent Memory</h4>
+                    <div class="setting-item">
+                        <button class="btn-secondary" id="viewMemoryBtn">View Memory</button>
+                        <button class="btn-secondary" id="clearMemoryBtn">Clear Memory</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Settings Modal -->
+    <div class="modal" id="apiSettingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-key"></i> API Settings</h2>
+                <button class="btn-icon-sm" id="closeApiSettingsModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-group">
+                    <h4>OpenRouter API Key</h4>
+                    <div class="input-group">
+                        <input type="password" id="apiKeyInput" class="input-field" placeholder="Enter your OpenRouter API Key">
+                        <button class="btn-secondary" id="saveApiKeyBtn">Save</button>
+                    </div>
+                    <p class="help-text">Default key is pre-filled. You can use your own key (BYOK).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New File Modal -->
+    <div class="modal" id="newFileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-plus"></i> Create New File</h2>
+                <button class="btn-icon-sm" id="closeNewFileModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>File Name:</label>
+                    <input type="text" id="newFileName" class="input-field" placeholder="filename.txt">
+                </div>
+                <div class="input-group">
+                    <label>Location:</label>
+                    <select id="newFileLocation" class="input-field">
+                        <option value="/">Root Directory</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal" id="confirmNewFile">Create</button>
+                <button class="btn-modal btn-cancel" id="cancelNewFile">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Processing...</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/tokenizer.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/explorer.js"></script>
+    <script src="js/fileviewer.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/tools.js"></script>
+    <script src="js/memory.js"></script>
+    <script src="js/coins.js"></script>
+    <script src="js/modals.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

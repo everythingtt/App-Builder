@@ -1,0 +1,198 @@
+/* File Viewer Styles */
+.file-viewer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-primary);
+    overflow: hidden;
+}
+
+.viewer-tabs {
+    display: flex;
+    background: var(--bg-secondary);
+    border-bottom: 2px solid var(--border-color);
+    overflow-x: auto;
+    min-height: 40px;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-tertiary);
+    border-right: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    max-width: 200px;
+    min-width: 120px;
+}
+
+.tab:hover {
+    background: var(--bg-primary);
+}
+
+.tab.active {
+    background: var(--bg-primary);
+    border-bottom: 3px solid var(--accent-primary);
+    margin-bottom: -2px;
+}
+
+.tab .tab-icon {
+    color: var(--file-color);
+    font-size: 14px;
+}
+
+.tab .tab-name {
+    flex: 1;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tab .tab-close {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+.tab:hover .tab-close {
+    opacity: 1;
+}
+
+.tab .tab-close:hover {
+    background: var(--error-color);
+    color: white;
+}
+
+.viewer-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.editor-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+}
+
+.line-numbers {
+    background: var(--bg-secondary);
+    padding: 16px 8px;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    border-right: 1px solid var(--border-color);
+    user-select: none;
+    min-width: 50px;
+    overflow: hidden;
+}
+
+.editor {
+    flex: 1;
+    padding: 16px;
+    background: var(--code-bg);
+    border: none;
+    outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    resize: none;
+    white-space: pre;
+    overflow: auto;
+}
+
+.editor:focus {
+    outline: none;
+}
+
+/* Syntax Highlighting (Basic) */
+.editor .keyword { color: var(--accent-secondary); font-weight: bold; }
+.editor .string { color: var(--success-color); }
+.editor .comment { color: var(--text-secondary); font-style: italic; }
+.editor .function { color: var(--warning-color); }
+.editor .number { color: var(--error-color); }
+
+.empty-state {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--text-secondary);
+}
+
+.empty-state i {
+    font-size: 64px;
+    opacity: 0.3;
+}
+
+.empty-state p {
+    font-size: 16px;
+}
+
+.viewer-status-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 16px;
+    background: var(--bg-tertiary);
+    border-top: 2px solid var(--border-color);
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.viewer-status-bar span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Preview for images and other media */
+.media-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--code-bg);
+}
+
+.media-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.media-preview video, 
+.media-preview audio {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.binary-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--text-secondary);
+}
+
+.binary-preview i {
+    font-size: 64px;
+}
