@@ -9,7 +9,6 @@ class ChatManager {
 
     init() {
         this.setupEventListeners();
-        this.loadChatHistory();
         this.updateCoinDisplay();
     }
 

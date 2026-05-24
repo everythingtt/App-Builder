@@ -237,6 +237,11 @@ class OWLIDE {
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
     window.owlIDE = new OWLIDE();
+    
+    // Load chat history after all managers are initialized
+    setTimeout(() => {
+        chatManager.loadChatHistory();
+    }, 100);
 });
 
 // Expose useful functions for browser console (for debugging)
