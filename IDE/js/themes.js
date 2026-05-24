@@ -41,7 +41,8 @@ class ThemeManager {
     }
 
     updateBackground() {
-        const wallpaperKey = `wallpaper-${this.currentTheme === 'kawaii-pink' ? 'kawaii'}-${this.currentWallpaperIndex + 1}`;
+        const themeType = this.currentTheme === 'kawaii-pink' ? 'kawaii' : 'metal';
+        const wallpaperKey = `wallpaper-${themeType}-${this.currentWallpaperIndex + 1}`;
         document.body.setAttribute(`data-wallpaper`, wallpaperKey);
         
         const wallpapers = this.wallpapers[this.currentTheme];
