@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OWL IDE — OpenRouter-Powered Web Development Environment</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦉</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <a href="#" class="logo">
+        <div class="logo-icon">🦉</div>
+        <span class="logo-text">OWL IDE</span>
+      </a>
+      
+      <div class="header-actions">
+        <div class="token-balance">
+          <span class="icon">⚡</span>
+          <span class="count" id="tokenCount">100</span>
+          <span>tokens</span>
+        </div>
+        
+        <button class="btn btn-secondary" id="saveBtn" title="Save to GitHub">
+          <span>💾</span> Save
+        </button>
+        
+        <button class="btn btn-secondary" id="loadBtn" title="Load from GitHub">
+          <span>📂</span> Load
+        </button>
+        
+        <button class="btn btn-primary" id="loginBtn">
+          <span>🔐</span> Login
+        </button>
+        
+        <button class="btn btn-secondary" id="logoutBtn" style="display: none;">
+          <span>🚪</span> Logout
+        </button>
+        
+        <span id="userDisplay" style="display: none; color: var(--text-secondary); font-size: 13px;"></span>
+      </div>
+    </header>
+    
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-title">Explorer</span>
+        <div class="sidebar-actions">
+          <button class="btn btn-icon" id="newFileBtn" title="New File">📄</button>
+          <button class="btn btn-icon" id="newFolderBtn" title="New Folder">📁</button>
+          <button class="btn btn-icon" id="uploadBtn" title="Upload">⬆️</button>
+        </div>
+      </div>
+      
+      <div class="file-explorer" id="fileExplorer">
+        <div class="empty-state">
+          <div class="icon">📂</div>
+          <div class="title">No files yet</div>
+          <div class="description">Create a new file or upload files to get started</div>
+        </div>
+      </div>
+    </aside>
+    
+    <main class="main-content">
+      <div class="tabs-container" id="tabsContainer">
+      </div>
+      
+      <div class="editor-container">
+        <div class="editor-pane">
+          <div class="editor-header">
+            <span class="editor-path" id="editorPath">No file selected</span>
+            <div class="editor-actions">
+              <button class="btn btn-icon" id="saveFileBtn" title="Save (Ctrl+S)">💾</button>
+            </div>
+          </div>
+          <div class="editor-content" id="editorContent">
+            <div class="empty-state">
+              <div class="icon">📂</div>
+              <div class="title">No file selected</div>
+              <div class="description">Select a file from the explorer to start editing</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="preview-pane">
+          <div class="preview-header">
+            <span class="preview-title">Preview</span>
+            <div class="preview-actions">
+              <button class="btn btn-icon" id="refreshPreviewBtn" title="Refresh">🔄</button>
+            </div>
+          </div>
+          <div class="preview-content" id="previewContent">
+            <div class="empty-state">
+              <div class="icon">👁️</div>
+              <div class="title">No preview available</div>
+              <div class="description">Select an HTML file to see a live preview</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="context-bar" id="contextBar">
+        <span class="label">Context:</span>
+        <span class="value">0 / 32,768 tokens (0%)</span>
+      </div>
+    </main>
+    
+    <aside class="agent-panel" id="agentPanel">
+      <div class="agent-header">
+        <div class="agent-title">
+          <span class="icon">🦉</span>
+          <span>OWL Assistant</span>
+        </div>
+      </div>
+      
+      <div class="model-selector">
+        <label>Model</label>
+        <select id="modelSelect">
+          <option value="openrouter/owl-alpha">OWL Alpha (2 tokens)</option>
+          <option value="baidu/cobuddy:free">Cobuddy (1 token)</option>
+          <option value="poolside/laguna-xs.2:free">Laguna XS.2 (1 token)</option>
+          <option value="nvidia/nemotron-3-super-120b-a12b:free">Nemotron 3 Super (1 token)</option>
+          <option value="openai/gpt-oss-120b:free">GPT-OSS 120B (1 token)</option>
+          <option value="qwen/qwen3-coder-next">Qwen3 Coder Next (11 tokens)</option>
+          <option value="minimax/minimax-m2.5">MiniMax M2.5 (15 tokens)</option>
+          <option value="qwen/qwen3-coder">Qwen3 Coder (22 tokens)</option>
+        </select>
+      </div>
+      
+      <div class="api-key-section">
+        <label>OpenRouter API Key</label>
+        <input type="password" id="apiKeyInput" placeholder="sk-or-v1-...">
+        <div class="key-status" id="keyStatus">
+          <span class="dot"></span> No API Key
+        </div>
+      </div>
+      
+      <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+          <div class="empty-state">
+            <div class="icon">🦉</div>
+            <div class="title">OWL is ready</div>
+            <div class="description">Ask me to help you write, debug, or explain your code</div>
+          </div>
+        </div>
+        
+        <div class="chat-input-container">
+          <div class="chat-input-wrapper">
+            <textarea class="chat-input" id="chatInput" placeholder="Ask OWL anything about your code..." rows="1"></textarea>
+            <button class="chat-send" id="sendBtn" title="Send (Enter)">➤</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+  
+  <div class="modal-overlay" id="newFileModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Create New File</span>
+        <button class="modal-close" onclick="closeModal('newFileModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>File Name</label>
+          <input type="text" id="newFileName" placeholder="example.js">
+        </div>
+        <div class="form-group">
+          <label>Folder</label>
+          <select id="newFileFolder">
+            <option value="">Root</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('newFileModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmNewFile()">Create</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="newFolderModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Create New Folder</span>
+        <button class="modal-close" onclick="closeModal('newFolderModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Folder Name</label>
+          <input type="text" id="newFolderName" placeholder="my-folder">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('newFolderModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmNewFolder()">Create</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="uploadModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Upload Files</span>
+        <button class="modal-close" onclick="closeModal('uploadModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Select Files</label>
+          <input type="file" id="fileUploadInput" multiple onchange="handleFileUpload(event)">
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
+          Files will be checked against the context limit before uploading.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('uploadModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="renameModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Rename</span>
+        <button class="modal-close" onclick="closeModal('renameModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>New Name</label>
+          <input type="text" id="renameInput">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('renameModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmRename()">Rename</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="toast-container" id="toastContainer"></div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

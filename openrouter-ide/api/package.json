@@ -1,0 +1,9 @@
+{
+  "name": "openrouter-ide-api",
+  "version": "1.0.0",
+  "description": "Vercel API middleware for OpenRouter IDE",
+  "dependencies": {
+    "@octokit/rest": "^20.0.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
