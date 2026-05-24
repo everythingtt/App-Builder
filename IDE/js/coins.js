@@ -28,7 +28,7 @@ class CoinManager {
     }
 
     getCost(modelId) {
-        return this.costs[modelId] || 10; // Default to 10 if unknown
+        return this.modelCosts[modelId] || 10; // Default to 10 if unknown
     }
 
     canAfford(modelId) {
